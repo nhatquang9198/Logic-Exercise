@@ -6,9 +6,7 @@ public class Meeting {
 	private LocalTime begin;
 	private LocalTime end;
 
-	public Meeting(LocalTime begin, LocalTime end) {
-		this.begin = begin;
-		this.end = end;
+	public Meeting() {
 	}
 
 	public LocalTime getBegin() {

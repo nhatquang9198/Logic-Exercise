@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-public class Test {
+public class Solution {
 
 	// Solution to the problem is under the main function
 	// Please ignore and skip this function
@@ -47,21 +47,26 @@ public class Test {
 	private static int Bulbs_Shine(List<Bulb> bulbs, List<Integer> sequence) {
 		int count = 0;
 		int best_index = 0;
+		int max_index = -1;
 		boolean flag;
 
 		for (int i : sequence) {
-//			System.out.println("\ni: " + (i - 1) + "best: " + best_index);
+//			System.out.println("\ni: " + (i - 1) + " best: " + best_index);
 			bulbs.get(i - 1).setOn(true);
 
+			if (i - 1 > max_index) {
+				max_index = i - 1;
+			}
+
 			flag = true;
-			innerloop: for (int j = best_index; j <= i - 1; j++) {
+			innerloop: for (int j = best_index; j <= max_index; j++) {
 				if (!bulbs.get(j).isOn()) {
 					flag = false;
 					break innerloop;
 				}
 			}
 //			System.out.println(bulbs);
-//			System.out.println(flag);
+//			System.out.println("flag: " + flag + " max: " + max_index);
 
 			if (flag == true) {
 				best_index = i - 1;
