@@ -1,6 +1,5 @@
 package magic_square;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Solution {
@@ -39,47 +38,45 @@ public class Solution {
 	public static int solution(int[][] matrix) {
 		int n = matrix.length;
 		int m = matrix[0].length;
-		int max_lenght;
-		int temp[][];
-		int sum, sum_temp;
 
-		// matrix size is 1x1
 		if (n == 1 && m == 1) {
+			// matrix size is 1x1
 			return 1;
-		}
-		// matrix is a square
-		else if (n == m) {
-			max_lenght = n;
+		} else {
+			// find the smaller number between m and n
+			// max_length = m if n is bigger
+			// max_length = n if m is bigger or n == m
+			int max_length = (n > m) ? m : n;
+			int size = 1;
+			int[][] temp;
+			int x = 0, y = 0;
+			boolean flag;
 
-			for (int i = max_lenght; i > 1; i--) {
-				temp = new int[i][i];
-				int x = 0, y = 0;
-				sum = 0;
-				sum_temp = 0;
+			outerloop: for (int length = 2; length <= max_length; length++) {
+				temp = new int[length][length];
+				flag = false;
 
-				outerloop: for (int j = 0; j <= n - max_lenght; j++, x++) {
-					for (int j2 = 0; j2 < m - max_lenght; j2++, y++) {
-						temp[x][y] = matrix[j][j2];
-					}
-					// System.arraycopy(matrix[j], j, temp[x], 0, max_lenght);
-					
-					System.out.println("\n");
-					for (int[] t : temp) {
-						for (int r : t) {
-							System.out.print(r + " ");
+				for (int row = 0; row < n - size; row++) {
+					for (int column = 0; column < m - size; column++, x = 0) {
+						for (int i = row; i < row + length && x < length; i++, x++, y = 0) {
+							for (int j = column; j < column + length && y < length; j++, y++) {
+								temp[x][y] = matrix[i][j];
+							}
 						}
-						System.out.println();
+						temp = new int[length][length];
 					}
 				}
+				size = length;
+
+//				if (flag == true) {
+//					size = length;
+//				} else {
+//					break outerloop;
+//				}
 			}
+
+			return size;
 		}
-		// matrix is a rectangle
-		else if (n > m) {
-			max_lenght = Math.abs(n - m);
-		} else {
-			max_lenght = Math.abs(n - m);
-		}
-		return 1;
 	}
 
 }

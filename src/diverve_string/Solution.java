@@ -20,32 +20,26 @@ public class Solution {
 	}
 
 	public static String solution(int a, int b, int c) {
-		String s = "";
-		boolean flag = true;
-
 		if (a == 0 && b == 0 || a == 0 && c == 0 || b == 0 && c == 0) {
-			return s;
-		} else if (a > b && a > c) {
-			while (flag) {
-				if (s.length() > 2) {
-					if (a-- > 0) {
-						s = s + "a";
-					}
-				} else if (b-- > 0) {
-					s = s + "b";
-				} else if (c-- > 0) {
-					s = s + "c";
-				} else {
-					flag = false;
-				}
-			}
-		} else if (b > a && b > c) {
-			s = "b";
+			return "";
 		} else {
-			s = "c";
+			String s = "";
+			s = s + generateString(a, "a");
+			s = s + generateString(b, "b");
+			s = s + generateString(c, "c");
 
+			return s;
 		}
-		return s;
+	}
+
+	public static String generateString(int length, String s) {
+		String string = "";
+
+		for (int i = 0; i < length; i++) {
+			string = string + s;
+		}
+
+		return string;
 	}
 
 }
