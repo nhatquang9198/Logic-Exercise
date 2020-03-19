@@ -47,7 +47,7 @@ public class Solution {
 			// max_length = m if n is bigger
 			// max_length = n if m is bigger or n == m
 			int max_length = (n > m) ? m : n;
-			int size = 1;
+			int size = 1, answer = 1;
 			int[][] temp;
 			int x = 0, y = 0;
 			boolean flag;
@@ -56,27 +56,76 @@ public class Solution {
 				temp = new int[length][length];
 				flag = false;
 
-				for (int row = 0; row < n - size; row++) {
+				innerloop: for (int row = 0; row < n - size; row++) {
 					for (int column = 0; column < m - size; column++, x = 0) {
 						for (int i = row; i < row + length && x < length; i++, x++, y = 0) {
 							for (int j = column; j < column + length && y < length; j++, y++) {
 								temp[x][y] = matrix[i][j];
 							}
 						}
-						temp = new int[length][length];
+
+						System.out.println("square:");
+						for (int[] u : temp) {
+							for (int i : u) {
+								System.out.print(i + " ");
+							}
+							System.out.println();
+						}
+
+						if (isMagical(temp)) {
+							flag = true;
+//							break innerloop;
+						}
 					}
 				}
 				size = length;
 
-//				if (flag == true) {
-//					size = length;
-//				} else {
-//					break outerloop;
-//				}
+				if (flag == true) {
+					answer = length;
+				}
 			}
 
-			return size;
+			return answer;
 		}
+	}
+
+	public static boolean isMagical(int[][] square) {
+		int sum = 0;
+		int sum_temp = 0;
+
+		for (int i = 0; i < square.length; i++) {
+			sum = sum + square[i][i];
+		}
+
+		for (int i = square.length - 1; i >= 0; i--) {
+			sum_temp = sum_temp + square[i][i];
+		}
+
+		if (sum != sum_temp) {
+			return false;
+		}
+
+		for (int i = 0; i < square.length; i++) {
+			sum_temp = 0;
+			for (int j = 0; j < square.length; j++) {
+				sum_temp = sum_temp + square[i][j];
+			}
+			if (sum != sum_temp) {
+				return false;
+			}
+		}
+
+		for (int j = 0; j < square.length; j++) {
+			sum_temp = 0;
+			for (int i = 0; i < square.length; i++) {
+				sum_temp = sum_temp + square[i][j];
+			}
+			if (sum != sum_temp) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 }
